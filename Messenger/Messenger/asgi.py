@@ -15,10 +15,10 @@ from chat_app.routing import ws_urlpatterns
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Messenger.settings')
 
-#
+# Створюємо змінну application (об'єкт додатку)
 application = ProtocolTypeRouter({
-    #
+    # При http-запиті викликається стандартна функція get_asgi_application(), яка перенаправить запит в urls.py
     "http": get_asgi_application(),
-    #
+    # При ws-запиті викликається функція, яка відправить запит у routing.py
     "websocket": URLRouter(ws_urlpatterns)
 })

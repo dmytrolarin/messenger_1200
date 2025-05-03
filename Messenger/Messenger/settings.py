@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne', #
+    'daphne', # Підключаємо бібліотеку daphne для того, щоб запустити сервер в асинхронному режимі.
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,8 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chat_app',
 ]
-#
+# Який asgi app використовувати під час асинхронного запуску сервера (вказуємо шлях до об'єкта додатку).
 ASGI_APPLICATION = 'Messenger.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
