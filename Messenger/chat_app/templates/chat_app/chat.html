@@ -1,19 +1,24 @@
+{% extends "base.html" %}
 {% load static %}
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script defer src = "{% static 'chat_app/js/chat.js' %}"></script>
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>Кімната чату</h1>
+
+{% block link %}
+    <script defer src = "{% static 'chat_app/js/chat.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Кімната чату</h1>
+    {% if user.is_authenticated %}
+        <h2>Ви увійшли як {{ user.username }}</h2>
+        
         <form id = "messageForm">
             {{ form.as_p }}
             <button>Надіслати</button>
         </form>
         <div id = "messages">
-            
         </div>
-    </body>
-</html>
+    {% else %}
+        <p>Увійдіть, щоб мати змогу переписуватись.</p>
+    {% endif %}
+{% endblock %}
+     
+
