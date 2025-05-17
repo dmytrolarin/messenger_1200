@@ -10,7 +10,7 @@
     <body>
         <header>
             <nav>
-                <a href = "{% url 'chats' %}">Чат</a>
+                <a href = "{% url 'groups' %}">Доступні групи</a>
                 {% if user.is_authenticated %}
                 <h2>{{user.username}}</h2>
                 <form action="{% url 'logout' %}" method="post">

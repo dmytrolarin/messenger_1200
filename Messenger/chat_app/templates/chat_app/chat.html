@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Кімната чату</h1>
+    <h1>Група "{{ chat_group }}"</h1>
+    <input id="groupId" type="hidden" value="{{ chat_group.id }}">
     {% if user.is_authenticated %}
         <h2>Ви увійшли як {{ user.username }}</h2>
         

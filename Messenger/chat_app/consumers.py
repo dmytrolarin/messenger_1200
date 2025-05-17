@@ -10,13 +10,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
     Створюємо клас ChatConsumer, який відповідає за з'єднання сервера з клієнтом. Він відловлює та обробляє ws запити 
     '''
     # Ім'я групи для користувачів
-    GROUP_NAME = "chat"
+    # GROUP_NAME = "chat"
     async def connect(self):
         '''
         Метод connect відпрацьовує, коли користувач надсилає запит про підключення
         '''
+        self.group_id = str(self.scope['url_route']['kwargs']['group_id'])
         await self.channel_layer.group_add(
-            self.GROUP_NAME, 
+            self.group_id, 
             self.channel_name
         )
         # Запит про підключення схвалений
@@ -29,7 +30,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # Відправляємо повідомлення всім участникам групи
         await self.channel_layer.group_send(
             # Вказуємо назву групи
-            self.GROUP_NAME, 
+            self.group_id, 
             {
                 # Вказуємо тип обробника (метод, що викличиться для відправки повідомлення)
                 "type": "send_message_to_chat",
