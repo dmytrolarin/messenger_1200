@@ -20,6 +20,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.group_id, 
             self.channel_name
         )
+        print(self.scope["user"])
         # Запит про підключення схвалений
         await self.accept()
 
@@ -36,6 +37,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "type": "send_message_to_chat",
                 # Передаємо повідомлення користувача через ivent, send_message_to_chat
                 "text_data": text_data,
+                "username": self.scope["user"].username,
             }
         )
         
@@ -51,7 +53,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # У випадку якщо всі поля валідні
         if form.is_valid():
             # Надсилаємо повідомленя назад через WebSocket клієнту
-            await self.send(text_data = event["text_data"])
+            text_to_send = f"{event['username']}: {dict_data['message']}"
+            text_data = json.dumps({"message": text_to_send}, ensure_ascii = False)
+            await self.send(text_data = text_data)
         else:
             # Виводимо помилку, якщо форма не валідна
             print("Error, form isnt valid!")

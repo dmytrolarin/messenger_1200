@@ -1,10 +1,13 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 
-# Create your models here.
+UserModel = get_user_model()
+
 class ChatGroup(models.Model):
     name = models.CharField(max_length = 200)
+    users = models.ManyToManyField(UserModel)
 
     def __str__(self):
         return self.name
