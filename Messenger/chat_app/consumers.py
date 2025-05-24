@@ -4,6 +4,9 @@ consumers.py - файл, який обробляє логіку веб-соке�
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 from .forms import MessageForm
+from channels.db import database_sync_to_async
+from .models import ChatMessage
+
 
 class ChatConsumer(AsyncWebsocketConsumer):
     '''
@@ -28,6 +31,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         '''
             Метод receive спрацьовує, коли сервер отримує повідомленя від клієнта
         '''
+        await self.save_message(text_data)
+
         # Відправляємо повідомлення всім участникам групи
         await self.channel_layer.group_send(
             # Вказуємо назву групи
@@ -59,3 +64,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         else:
             # Виводимо помилку, якщо форма не валідна
             print("Error, form isnt valid!")
+
+    @database_sync_to_async
+    def save_message(self, message_data):
+        user = self.scope['user']
+        message_data = json.loads(message_data)
+        message = ChatMessage.objects.create(
+            content = message_data['message'],
+            author = user,
+            chat_group_id = self.group_id
+        )

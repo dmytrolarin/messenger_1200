@@ -14,3 +14,10 @@ class ChatGroup(models.Model):
 
     def get_absolute_url(self):
         return reverse("chat", kwargs = {"group_id": self.pk})
+    
+
+class ChatMessage(models.Model):
+    content = models.TextField()
+    author = models.ForeignKey(UserModel, on_delete = models.SET_NULL, null = True)
+    chat_group = models.ForeignKey(ChatGroup, on_delete = models.CASCADE)
+    date_time = models.DateTimeField(auto_now_add = True)
