@@ -16,6 +16,9 @@
             <button>Надіслати</button>
         </form>
         <div id = "messages">
+            {% for message in messages %}
+                <p>{{ message.author.username }}: {{ message.content }} ({{ message.date_time }})</p>
+            {% endfor %}
         </div>
     {% else %}
         <p>Увійдіть, щоб мати змогу переписуватись.</p>
