@@ -17,7 +17,7 @@
         </form>
         <div id = "messages">
             {% for message in messages %}
-                <p>{{ message.author.username }}: {{ message.content }} ({{ message.date_time }})</p>
+                <p>{{ message.author.username }}: {{ message.content }} (<span class = "message-time">{{ message.date_time.isoformat }}</span>)</p>
             {% endfor %}
         </div>
     {% else %}

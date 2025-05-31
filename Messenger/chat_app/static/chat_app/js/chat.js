@@ -11,14 +11,27 @@ const CHAT_SOCKET = new WebSocket(SOCKET_URL)
 // Після успішного з'єднання повідомлення виводится у консоль
 CHAT_SOCKET.addEventListener("open",() => console.log("Успішне з`єднання"))
 
+function processMessageTime(text){
+    let date = new Date(text)
+    let dateText = date.toLocaleString();//`${date.getHours()}:${date.getMinutes()} ${date.getDate()}`
+    return dateText
+}
+
+const messageTimes = document.querySelectorAll(".message-time")
+for (let messageTime of messageTimes){
+    let text = messageTime.textContent
+    messageTime.textContent = processMessageTime(text)
+}
+
 // Отримуємо DOM-елемент, в який будуть додаватися нові повідомлення
 const messages = document.getElementById("messages");
 // Слухаємо події надходження повідомлень від WebSocket-з'єднання
 CHAT_SOCKET.addEventListener("message", (event) => {
     // Розбираємо отриманий JSON-рядок у вигляді об'єкта
     let data = JSON.parse(event.data);
+    let localTime = processMessageTime(data.datetime)
     // Додаємо нове повідомлення до вмісту блоку з повідомленнями
-    messages.innerHTML += `<p>${data.message}</p>`;
+    messages.innerHTML += `<p>${data.message} (${localTime})</p>`;
 })
 
 // Створюємо константу messageForm з об'єктом форми

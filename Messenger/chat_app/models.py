@@ -2,10 +2,13 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
-
+#
 UserModel = get_user_model()
 
 class ChatGroup(models.Model):
+    '''
+    
+    '''
     name = models.CharField(max_length = 200)
     users = models.ManyToManyField(UserModel)
 
@@ -17,6 +20,9 @@ class ChatGroup(models.Model):
     
 
 class ChatMessage(models.Model):
+    '''
+    
+    '''
     content = models.TextField()
     author = models.ForeignKey(UserModel, on_delete = models.SET_NULL, null = True)
     chat_group = models.ForeignKey(ChatGroup, on_delete = models.CASCADE)
