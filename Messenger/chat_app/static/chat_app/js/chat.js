@@ -2,6 +2,7 @@
     Файл для взаємодії клієнта з сервером за протоколом WS
 */
 
+// 
 const groupId = document.getElementById('groupId').value
 // Формуємо URL адресу для WS-з'єднання за поточним хостом
 const SOCKET_URL = `ws://${window.location.host}/chat/${groupId}`
@@ -11,15 +12,23 @@ const CHAT_SOCKET = new WebSocket(SOCKET_URL)
 // Після успішного з'єднання повідомлення виводится у консоль
 CHAT_SOCKET.addEventListener("open",() => console.log("Успішне з`єднання"))
 
+// 
 function processMessageTime(text){
+    // 
     let date = new Date(text)
-    let dateText = date.toLocaleString();//`${date.getHours()}:${date.getMinutes()} ${date.getDate()}`
+    // 
+    let dateText = date.toLocaleString();
+    // 
     return dateText
 }
 
+// 
 const messageTimes = document.querySelectorAll(".message-time")
+// 
 for (let messageTime of messageTimes){
+    // 
     let text = messageTime.textContent
+    // 
     messageTime.textContent = processMessageTime(text)
 }
 
@@ -29,6 +38,7 @@ const messages = document.getElementById("messages");
 CHAT_SOCKET.addEventListener("message", (event) => {
     // Розбираємо отриманий JSON-рядок у вигляді об'єкта
     let data = JSON.parse(event.data);
+    // 
     let localTime = processMessageTime(data.datetime)
     // Додаємо нове повідомлення до вмісту блоку з повідомленнями
     messages.innerHTML += `<p>${data.message} (${localTime})</p>`;
