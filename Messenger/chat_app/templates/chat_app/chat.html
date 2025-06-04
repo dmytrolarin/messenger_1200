@@ -7,22 +7,23 @@
 
 {% block content %}
     <h1>Група "{{ chat_group }}"</h1>
+    <!-- Зберігаємо id групи для того, щоб потім отримати у js -->
     <input id="groupId" type="hidden" value="{{ chat_group.id }}">
-    {% if user.is_authenticated %}
-        <h2>Ви увійшли як {{ user.username }}</h2>
-        
-        <form id = "messageForm" ty>
-            {{ form.as_p }}
-            <button>Надіслати</button>
-        </form>
-        <div id = "messages">
-            {% for message in messages %}
-                <p>{{ message.author.username }}: {{ message.content }} (<span class = "message-time">{{ message.date_time.isoformat }}</span>)</p>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>Увійдіть, щоб мати змогу переписуватись.</p>
-    {% endif %}
+
+    <h2>Ви увійшли як {{ user.username }}</h2>
+    <!-- Форма для надсилання повідомлення -->
+    <form id = "messageForm" >
+        {{ form.as_p }}
+        <button>Надіслати</button>
+    </form>
+    <!-- Блок для відображення всіх повідомлень -->
+    <div id = "messages">
+        <!-- Проходимось по кожному повідомленню у списку повідомлень -->
+        {% for message in messages %}
+            <!-- Виводимо автора, текст повідомлення та час -->
+            <p>{{ message.author.username }}: {{ message.content }} (<span class = "message-time">{{ message.date_time.isoformat }}</span>)</p>
+        {% endfor %}
+    </div>
 {% endblock %}
      
 

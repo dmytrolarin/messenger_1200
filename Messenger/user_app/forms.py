@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class CustomUserCreationForm(UserCreationForm):
     '''
-    
+    Створюємо кастомний клас для створення користувача, який наслідує клас UserCreationForm заради валідації.
+    За допомогою метода __init__  користуємося конструктором полів, та ініціалізуємо форму. Редагуємо вже існуючи поля та їх плейсхолдери.
     '''
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -14,7 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomAuthenticationForm(AuthenticationForm):
     '''
-    
+    Також ініціалізуємо кастомну форму для авторизації та через конструктор редагуємо два нових поля.
     '''
     def __init__(self,request, *args, **kwargs):
         super().__init__(request,*args, **kwargs)

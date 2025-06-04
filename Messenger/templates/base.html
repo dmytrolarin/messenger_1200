@@ -11,6 +11,7 @@
         <header>
             <nav>
                 <a href = "{% url 'groups' %}">Доступні групи</a>
+                <a href= "{% url 'personal_chats' %}">Доступні персональні чати</a>
                 {% if user.is_authenticated %}
                 <h2>{{user.username}}</h2>
                 <form action="{% url 'logout' %}" method="post">
