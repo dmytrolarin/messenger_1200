@@ -29,3 +29,4 @@ class ChatMessage(models.Model):
     author = models.ForeignKey(UserModel, on_delete = models.SET_NULL, null = True)
     chat_group = models.ForeignKey(ChatGroup, on_delete = models.CASCADE)
     date_time = models.DateTimeField(auto_now_add = True)
+    views = models.ManyToManyField(UserModel, related_name = "viewed_messages" )

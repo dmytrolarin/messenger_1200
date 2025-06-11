@@ -22,6 +22,7 @@
         {% for message in messages %}
             <!-- Виводимо автора, текст повідомлення та час -->
             <p>{{ message.author.username }}: {{ message.content }} (<span class = "message-time">{{ message.date_time.isoformat }}</span>)</p>
+            <i>Переглядів: {{ message.views.count }}</i>
         {% endfor %}
     </div>
 {% endblock %}

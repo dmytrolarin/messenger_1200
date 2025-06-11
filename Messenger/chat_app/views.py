@@ -25,6 +25,15 @@ class ChatView(FormView):
         user = request.user
         # Якщо користувач є у чаті
         if user in chat.users.all():
+            # Отримуємо усі повідомлення, що знаходсятья у поточній чат-групі
+            current_group_messages = ChatMessage.objects.filter(chat_group = chat)
+            # Перебираємо усі повідомлення з поточної групи
+            for message in current_group_messages:
+                # Додаємо поточного користувача по зв'язку ManyToMany, як того, хто переглянув повідомлення
+                message.views.add(user)
+                # Зберігаємо зміни у об'єкті повідомлення
+                message.save()
+
             # Повертаємо звичайний виклик методу
             return super().dispatch(request, *args, **kwargs)
         else:
