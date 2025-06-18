@@ -2,6 +2,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from .models import Profile
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 
@@ -15,6 +16,15 @@ class RegisterView(CreateView):
     template_name = 'user_app/register.html'
     # Вказуємо шлях для редіректу після успішного заповнення форми
     success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        data = form.cleaned_data
+        birthday = data["date_of_birth"]
+        avatar = data.get('avatar')
+        user = self.object
+        Profile.objects.create(user = user, avatar = avatar, date_of_birth = birthday)
+        return response
 
 
 class CustomLoginView(LoginView):

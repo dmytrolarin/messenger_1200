@@ -12,6 +12,9 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields["username"].widget.attrs.update({"placeholder": "Логін"})
         self.fields["password1"].widget.attrs.update({"placeholder": "Пароль"})
         self.fields["password2"].widget.attrs.update({"placeholder": "Підтвердіть пароль"})
+        
+    avatar = forms.ImageField(required = False, label = "Аватар")
+    date_of_birth = forms.DateField(label = "Дата народження", widget = forms.DateInput(attrs = {"type": "date"}))
 
 class CustomAuthenticationForm(AuthenticationForm):
     '''
