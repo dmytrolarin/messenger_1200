@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from .models import Profile
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from django.http import JsonResponse
 
 
 class RegisterView(CreateView):
@@ -43,3 +44,12 @@ class CustomLogoutView(LogoutView):
     '''
     # Вказуємо на яку сторінку перейти після логауту
     next_page = 'login'
+
+
+def change_avatar(request):
+    avatar = request.FILES.get("avatar")
+    profile = request.user.profile
+    profile.avatar = avatar
+    profile.save()
+
+    return JsonResponse({})
